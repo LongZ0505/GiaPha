@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
-// CSS file (tự tạo) để style giống mockup [cite: 7]
-import './AuthPages.css'; 
+import './AuthPages.css';
+
+// 🐉 thêm dòng này
+import Lottie from 'lottie-react';
+import dragonAnim from '../../assets/dragon.json';
 
 const LoginPage = () => {
   const [username, setUsername] = useState('');
@@ -16,19 +19,22 @@ const LoginPage = () => {
     setError('');
     try {
       await login(username, password);
-      navigate('/'); // Chuyển về trang chủ sau khi đăng nhập
-    } catch (err) {
+      navigate('/');
+    } catch {
       setError('Tên đăng nhập hoặc mật khẩu không đúng.');
     }
   };
 
   return (
     <div className="auth-container">
+      {/* 🐉 Rồng bay nền */}
+      <Lottie animationData={dragonAnim} loop={true} className="auth-dragon" />
+
       <form onSubmit={handleSubmit} className="auth-form">
-        <h2>Đăng nhập [Cặc]</h2>
-        
+        <h2>Đăng nhập</h2>
+
         <div className="form-group">
-          <label htmlFor="username">Tên đăng nhập/Email: *</label>
+          <label htmlFor="username">Tên đăng nhập/Email *</label>
           <input
             type="text"
             id="username"
@@ -37,9 +43,9 @@ const LoginPage = () => {
             required
           />
         </div>
-        
+
         <div className="form-group">
-          <label htmlFor="password">Mật khẩu: *</label>
+          <label htmlFor="password">Mật khẩu *</label>
           <input
             type="password"
             id="password"
@@ -48,11 +54,13 @@ const LoginPage = () => {
             required
           />
         </div>
-        
+
         {error && <p className="error-message">{error}</p>}
-        
-        <button type="submit" className="btn-submit">Đăng nhập</button>
-        
+
+        <button type="submit" className="btn-submit">
+          Đăng nhập
+        </button>
+
         <div className="auth-links">
           <Link to="/register">Đăng ký</Link>
           <Link to="/forgot-password">Quên mật khẩu?</Link>
