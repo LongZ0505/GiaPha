@@ -7,9 +7,10 @@ import ReactFlow, {
   useEdgesState
 } from 'reactflow';
 import 'reactflow/dist/style.css';
-
+import './GenealogyPage.css';
 import MemberFormModal from '../../components/genealogy/MemberFormModal';
 import RelationshipFormModal from '../../components/genealogy/RelationshipFormModal';
+import homepageBg from '../../assets/homepage.jpg';
 import { 
   addMember, 
   updateMember, 
@@ -167,7 +168,7 @@ const GenealogyPage = () => {
   
   // (Tất cả các hàm còn lại: onEdgeClick, handleDeleteEdge, handleOpenAddModal, onNodeClick, 
   // handleCloseMemberModal, handleMemberFormSubmit, handleDeleteNode đều giữ nguyên)
-
+ 
   const onEdgeClick = useCallback((event, edge) => {
     event.stopPropagation();
     if (window.confirm(`Bạn có chắc muốn xóa mối quan hệ "${edge.label}"?`)) {
@@ -258,7 +259,9 @@ const GenealogyPage = () => {
 
   // (JSX và return giữ nguyên)
   return (
-    <div style={{ height: 'calc(100vh - 60px)' }}>
+    
+    <div className="genealogy-container" 
+      style={{ backgroundImage: `url(${homepageBg})` }} >
       {/* Thanh công cụ */}
       <div className="toolbar" style={{ padding: '10px', background: '#f0f0f0', display: 'flex', gap: '10px' }}>
         <button onClick={handleOpenAddModal}>

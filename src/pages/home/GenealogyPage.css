@@ -35,11 +35,7 @@
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
-/* Các đường kết nối */
-.react-flow__edge-path {
-  stroke: #2563eb !important;
-  stroke-width: 2px;
-}
+
 
 .react-flow__edge-text {
   fill: #1e3a8a;

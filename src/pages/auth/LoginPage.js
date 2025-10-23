@@ -27,7 +27,6 @@ const LoginPage = () => {
 
   return (
     <div className="auth-container">
-      {/* 🐉 Rồng bay nền */}
       <Lottie animationData={dragonAnim} loop={true} className="auth-dragon" />
 
       <form onSubmit={handleSubmit} className="auth-form">
