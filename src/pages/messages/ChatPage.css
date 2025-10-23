@@ -1,61 +1,91 @@
-/* ==== Chat Container ==== */
+/* ==== General ==== */
 .chat-container {
   display: flex;
-  height: calc(100vh - 100px);
+  height: calc(100vh - 100px); /* 100vh - navbar(60) - padding(40) */
   border-radius: 16px;
   overflow: hidden;
-  background: #f8faff;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  background: #ffffff;
+  border: 1px solid #eef1f6;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
 }
 
 /* ==== Sidebar ==== */
 .chat-sidebar {
-  width: 270px;
-  background: #ffffff;
-  border-right: 1px solid #e6e9f0;
+  width: 300px;
+  background: #fcfdff;
+  border-right: 1px solid #eef1f6;
   display: flex;
   flex-direction: column;
 }
 
 .chat-sidebar h3 {
-  padding: 18px 20px;
+  padding: 20px 25px;
   margin: 0;
-  font-size: 18px;
-  font-weight: 600;
-  color: #333;
-  background: #f7f9fc;
-  border-bottom: 1px solid #e0e3eb;
-  letter-spacing: 0.3px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #1a202c;
+  border-bottom: 1px solid #eef1f6;
 }
 
 .chat-sidebar ul {
   list-style: none;
-  padding: 0;
+  padding: 10px 0;
   margin: 0;
   overflow-y: auto;
 }
 
 .chat-sidebar li {
-  padding: 14px 20px;
+  padding: 15px 25px;
   cursor: pointer;
-  border-bottom: 1px solid #f3f4f6;
   display: flex;
   align-items: center;
-  gap: 10px;
-  color: #444;
+  gap: 15px;
   transition: all 0.2s ease-in-out;
   border-left: 4px solid transparent;
 }
 
 .chat-sidebar li:hover {
-  background: #f0f4ff;
+  background: #f7faff;
 }
 
 .chat-sidebar li.active {
-  background: #e8f0ff;
-  color: #007bff;
-  font-weight: 600;
+  background: #f0f6ff;
   border-left: 4px solid #007bff;
+}
+
+/* --- MỚI: Cấu trúc bên trong Sidebar Item --- */
+.sidebar-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: #e0e0e0; /* Màu placeholder */
+  flex-shrink: 0;
+  /* TODO: Thêm ảnh thật qua <img> */
+}
+
+.sidebar-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  overflow: hidden; /* Để text-overflow hoạt động */
+}
+
+.sidebar-info .name {
+  font-weight: 600;
+  font-size: 1rem;
+  color: #2d3748;
+}
+
+.chat-sidebar li.active .sidebar-info .name {
+  color: #007bff;
+}
+
+.sidebar-info .last-message {
+  font-size: 0.875rem;
+  color: #718096;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* ==== Main Chat Area ==== */
@@ -68,88 +98,111 @@
 
 /* ==== Header ==== */
 .chat-header {
-  padding: 15px 20px;
-  border-bottom: 1px solid #e6e9f0;
-  background: #fafbff;
-  font-weight: 600;
-  font-size: 18px;
-  color: #222;
+  padding: 20px 25px;
+  border-bottom: 1px solid #eef1f6;
+  background: #fafcff;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #2d3748;
 }
 
 /* ==== Message List ==== */
 .message-list {
   flex-grow: 1;
-  padding: 25px;
+  padding: 30px 25px;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
+  gap: 20px;
+  background: #f9fbfd;
+}
+
+/* --- MỚI: Wrapper cho tin nhắn nhận (để chứa avatar) --- */
+.message-received-wrapper {
+  display: flex;
+  align-items: flex-end; /* Căn avatar với đáy của bubble */
   gap: 12px;
-  background: #f9fafe;
+  max-width: 70%;
+  align-self: flex-start;
+}
+
+.message-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: #dbe4f2; /* Màu placeholder */
+  flex-shrink: 0;
+  /* TODO: Thêm ảnh thật qua <img> */
 }
 
 /* ==== Message Bubbles ==== */
 .message-item {
-  max-width: 65%;
-  padding: 12px 16px;
-  border-radius: 18px;
-  font-size: 15px;
-  line-height: 1.4;
+  padding: 12px 18px;
+  border-radius: 20px;
+  font-size: 0.95rem;
+  line-height: 1.5;
   word-wrap: break-word;
   animation: fadeIn 0.3s ease;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
 }
 
 .message-item.sent {
-  background: #007bff;
+  max-width: 70%;
+  background: linear-gradient(135deg, #007bff, #0056d2);
   color: #fff;
   align-self: flex-end;
-  border-bottom-right-radius: 4px;
+  border-bottom-right-radius: 6px;
+  box-shadow: 0 4px 15px rgba(0, 123, 255, 0.2);
 }
 
 .message-item.received {
-  background: #e9ecf5;
-  color: #222;
-  align-self: flex-start;
-  border-bottom-left-radius: 4px;
+  /* Tin nhắn nhận giờ nằm trong wrapper */
+  background: #eef1f6;
+  color: #2d3748;
+  border-bottom-left-radius: 6px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
 }
 
 /* ==== Input Area ==== */
 .message-input {
   display: flex;
-  padding: 15px 20px;
-  border-top: 1px solid #e6e9f0;
-  background: #ffffff;
+  align-items: center;
+  padding: 20px 25px;
+  border-top: 1px solid #eef1f6;
+  background: #fafcff;
 }
 
 .message-input input {
   flex-grow: 1;
-  padding: 12px 16px;
-  border: 1px solid #ccc;
+  padding: 14px 20px;
+  border: 1px solid #e0e3eb;
   border-radius: 25px;
   outline: none;
+  background: #ffffff;
+  font-size: 0.95rem;
   transition: all 0.2s ease;
 }
 
 .message-input input:focus {
   border-color: #007bff;
-  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15);
+  box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.1);
 }
 
 .message-input button {
-  padding: 12px 20px;
-  margin-left: 10px;
+  padding: 14px 22px;
+  margin-left: 12px;
   border: none;
   background: #007bff;
   color: white;
   border-radius: 25px;
   cursor: pointer;
   font-weight: 600;
+  font-size: 0.95rem;
   transition: all 0.2s ease;
 }
 
 .message-input button:hover {
   background: #0056d2;
-  transform: scale(1.05);
+  box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
 }
 
 /* ==== Empty Chat ==== */
@@ -157,27 +210,30 @@
   flex-grow: 1;
   display: grid;
   place-items: center;
-  color: #999;
-  font-size: 16px;
+  color: #a0aec0;
+  font-size: 1rem;
 }
 
 /* ==== Scrollbar ==== */
 .message-list::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
+}
+.message-list::-webkit-scrollbar-track {
+  background: transparent;
 }
 .message-list::-webkit-scrollbar-thumb {
-  background: #c5c5c5;
-  border-radius: 4px;
+  background: #d6dbe1;
+  border-radius: 3px;
 }
 .message-list::-webkit-scrollbar-thumb:hover {
-  background: #a5a5a5;
+  background: #bacad6;
 }
 
 /* ==== Animation ==== */
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(5px);
+    transform: translateY(10px);
   }
   to {
     opacity: 1;
