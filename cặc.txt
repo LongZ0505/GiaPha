@@ -1,4 +1,0 @@
-git add .
-git commit -m "Mô tả thay đổi của bạn, ví dụ: thêm tính năng tìm kiếm"
-git push origin main
-git pull origin main
