@@ -5,11 +5,12 @@ import apiClient from './apiConfig';
 export const login = async (usernameOrEmail, password) => {
   // Giao diện đăng nhập [cite: 7] yêu cầu Tên đăng nhập/Email và Mật khẩu
   try {
-    const response = await apiClient.post('/auth/login', { 
-      username: usernameOrEmail, // Cần khớp với 'userName' hoặc 'email' trong CSDL [cite: 21]
-      password: password, // Cần khớp với 'passWord' trong CSDL [cite: 21]
-    });
-    return response.data; // Giả sử backend trả về { user, token }
+    // const response = await apiClient.post('/auth/login', { 
+    //   username: usernameOrEmail, // Cần khớp với 'userName' hoặc 'email' trong CSDL [cite: 21]
+    //   password: password, // Cần khớp với 'passWord' trong CSDL [cite: 21]
+    // });
+    return true;
+    //return response.data; // Giả sử backend trả về { user, token }
   } catch (error) {
     console.error("Lỗi đăng nhập:", error.response?.data);
     throw error;

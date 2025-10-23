@@ -19,7 +19,7 @@ import NotificationPage from '../pages/notifications/NotificationPage'; // <-- T
 // Component PrivateRoute
 const PrivateRoute = ({ children }) => {
   const { user } = useAuth();
-  return user ? children : <Navigate to="/login" />;
+  return user ? children : <Navigate to="/" />;
 };
 
 const AppRouter = () => {

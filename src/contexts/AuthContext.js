@@ -1,57 +1,60 @@
-import React, { createContext, useState, useEffect } from 'react';
-import { login as apiLogin, register as apiRegister } from '../api/authApi';
+import React, { createContext, useState } from 'react';
+// import { login as apiLogin, register as apiRegister } from '../api/authApi';
 
 const AuthContext = createContext(null);
 
+// --- Dữ liệu người dùng giả để test ---
+// Bạn có thể chỉnh sửa thông tin này
+const MOCK_USER = {
+  id: 'user_test_01',
+  userName: 'tester',
+  email: 'test@example.com',
+  hoTen: 'Người Dùng Test',
+  // Thêm các quyền (roles) nếu bạn cần test chức năng admin
+  // roles: ['ADMIN', 'USER'] 
+};
+// ------------------------------------
+
+
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+  // 1. Khởi tạo 'user' bằng MOCK_USER thay vì null
+  const [user, setUser] = useState(MOCK_USER); 
+  
+  // 2. Khởi tạo 'loading' bằng false thay vì true
+  const [loading, setLoading] = useState(false); 
 
-  // Thử tải thông tin user từ localStorage khi mới vào app
-  useEffect(() => {
-    try {
-      const storedUser = localStorage.getItem('user');
-      if (storedUser) {
-        setUser(JSON.parse(storedUser));
-        // TODO: Xác thực token với backend ở đây
-      }
-    } catch (error) {
-      console.error("Failed to load user from storage", error);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+  // 3. Vô hiệu hóa (comment out) useEffect kiểm tra localStorage
+  // useEffect(() => {
+  //   try {
+  //     const storedUser = localStorage.getItem('user');
+  //     if (storedUser) {
+  //       setUser(JSON.parse(storedUser));
+  //     }
+  //   } catch (error) {
+  //     console.error("Failed to load user from storage", error);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // }, []);
 
+  // 4. Giả lập các hàm login/register/logout (chỉ in ra console)
   const login = async (username, password) => {
-    try {
-      const data = await apiLogin(username, password);
-      setUser(data.user);
-      localStorage.setItem('user', JSON.stringify(data.user));
-      localStorage.setItem('authToken', data.token); // Lưu token
-      return data.user;
-    } catch (error) {
-      throw error;
-    }
+    console.log("Đã gọi hàm login (mock):", username, password);
+    // Không làm gì cả, vì đã login
+    // Hoặc bạn có thể setUser(MOCK_USER) nếu logout đã set về null
   };
 
   const register = async (userData) => {
-    try {
-      const data = await apiRegister(userData);
-      // Tùy chọn: tự động đăng nhập sau khi đăng ký
-      setUser(data.user);
-      localStorage.setItem('user', JSON.stringify(data.user));
-      localStorage.setItem('authToken', data.token);
-      return data.user;
-    } catch (error) {
-      throw error;
-    }
+    console.log("Đã gọi hàm register (mock):", userData);
+    // Không làm gì cả
   };
 
   const logout = () => {
-    setUser(null);
-    localStorage.removeItem('user');
-    localStorage.removeItem('authToken');
-    // TODO: Gọi API /auth/logout nếu cần
+    console.log("Đã gọi hàm logout (mock)");
+    // Để test, chúng ta không set user về null
+    // Nếu bạn muốn test luồng logout thật, hãy bật dòng dưới:
+    // setUser(null); 
+    // localStorage.removeItem('user');
   };
 
   const authValue = {
@@ -64,7 +67,8 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider value={authValue}>
-      {!loading && children}
+      {/* 5. Bỏ check !loading vì loading luôn là false */}
+      {children} 
     </AuthContext.Provider>
   );
 };
