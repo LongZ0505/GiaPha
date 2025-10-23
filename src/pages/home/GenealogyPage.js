@@ -1,89 +1,34 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import ReactFlow, { MiniMap, Controls, Background } from 'reactflow';
 import 'reactflow/dist/style.css';
+import './GenealogyPage.css'; // CSS sẽ xử lý ảnh nền
 
-// import { getGenealogyTree } from '../../api/genealogyApi'; // API bạn sẽ tạo
-
-// Dữ liệu mock dựa trên giao diện 
-// Backend của bạn cần trả về dữ liệu theo định dạng này
+// Dữ liệu mẫu
 const initialNodes = [
-  {
-    id: 'A',
-    type: 'default', // Bạn có thể tạo custom node
-    data: { label: 'Ông A (Nam)\n1940-01-01\n2020-01-01' },
-    position: { x: 250, y: 5 },
-  },
-  {
-    id: 'B',
-    type: 'default',
-    data: { label: 'b (Nữ)\n1943-06-08\n2025-10-29' },
-    position: { x: 550, y: 5 },
-  },
-  {
-    id: 'D',
-    type: 'default',
-    data: { label: 'd (Nam)\n1985-01-07' },
-    position: { x: 400, y: 200 },
-  },
-  {
-    id: 'E',
-    type: 'default',
-    data: { label: 'e (Nữ)\n2011-06-14' },
-    position: { x: 400, y: 400 },
-  },
+  { id: 'A', data: { label: 'Ông A (Nam)\n1940–2020' }, position: { x: 250, y: 5 } },
+  { id: 'B', data: { label: 'Bà B (Nữ)\n1943–2025' }, position: { x: 550, y: 5 } },
+  { id: 'D', data: { label: 'Con D (Nam)\n1985–' }, position: { x: 400, y: 200 } },
+  { id: 'E', data: { label: 'Cháu E (Nữ)\n2011–' }, position: { x: 400, y: 400 } },
 ];
 
 const initialEdges = [
-  // Quan hệ Vợ-Chồng [cite: 31]
-  { id: 'eA-B', source: 'A', target: 'B', label: 'vợ-chồng', type: 'step' },
-  // Quan hệ Cha-Con [cite: 31]
-  { id: 'eA-D', source: 'A', target: 'D', label: 'cha-con', type: 'step' },
-  // Quan hệ Mẹ-Con [cite: 31]
-  { id: 'eB-D', source: 'B', target: 'D', label: 'mẹ-con', type: 'step' },
-  // Quan hệ Cha-Con
-  { id: 'eD-E', source: 'D', target: 'E', label: 'cha-con', type: 'step' },
+  { id: 'A-B', source: 'A', target: 'B', label: 'Vợ–Chồng', type: 'step' },
+  { id: 'A-D', source: 'A', target: 'D', label: 'Cha–Con', type: 'step' },
+  { id: 'B-D', source: 'B', target: 'D', label: 'Mẹ–Con', type: 'step' },
+  { id: 'D-E', source: 'D', target: 'E', label: 'Cha–Con', type: 'step' },
 ];
 
 const GenealogyPage = () => {
-  const [nodes, setNodes] = useState(initialNodes);
-  const [edges, setEdges] = useState(initialEdges);
-  // const [loading, setLoading] = useState(true);
-
-  // useEffect(() => {
-  //   // TODO: Gọi API để lấy dữ liệu cây gia phả thật
-  //   const fetchTree = async () => {
-  //     try {
-  //       setLoading(true);
-  //       const treeData = await getGenealogyTree(); // Hàm này từ genealogyApi.js
-  //       // Chuyển đổi dữ liệu từ API (Nodes và Relations) [cite: 28, 30] 
-  //       // sang định dạng nodes và edges của reactflow
-  //       const { nodes, edges } = transformDataForReactFlow(treeData);
-  //       setNodes(nodes);
-  //       setEdges(edges);
-  //     } catch (error) {
-  //       console.error("Lỗi tải cây gia phả:", error);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-  //   
-  //   fetchTree();
-  // }, []);
+  const [nodes] = useState(initialNodes);
+  const [edges] = useState(initialEdges);
 
   return (
-    <div style={{ height: 'calc(100vh - 60px)' }}> {/* Giả sử navbar cao 60px */}
-      {/* Thêm các thanh công cụ "Thêm thành viên", "Xóa thành viên", "Tạo quan hệ"
-        dựa trên giao diện  ở đây.
-        Các nút này sẽ gọi hàm từ 'genealogyApi.js'
-      */}
-      <ReactFlow
-        nodes={nodes}
-        edges={edges}
-        fitView
-      >
+    <div className="genealogy-container">
+      <div className="genealogy-overlay" />
+      <ReactFlow nodes={nodes} edges={edges} fitView>
         <MiniMap />
         <Controls />
-        <Background />
+        <Background gap={16} />
       </ReactFlow>
     </div>
   );
